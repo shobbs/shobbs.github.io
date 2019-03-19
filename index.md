@@ -5,6 +5,7 @@ layout: default
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 [Want to Contact me via email](mailto:mail.shobbs@gmail.com)
+[Testing About Page](./popper.html)
 
 As a SLUG graduate from the University of California Santa Cruz (UCSC)
 
