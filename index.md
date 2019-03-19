@@ -4,7 +4,7 @@ layout: default
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
-[Want to Contact me via email]("mailto:someone@example.com").
+[Want to Contact me via email](mailto:mail.shobbs@gmail.com)
 
 As a SLUG graduate from the University of California Santa Cruz (UCSC)
 
