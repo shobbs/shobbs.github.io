@@ -16,8 +16,6 @@ scientific documents and reports.
 This site is still a work in progress.
 ## Quote of the day
 
-> This is a blockquote following a header.
->
 > Temperance. Eat not to dullness; drink not to elevation.
 >Silence. Speak not but what may benefit others or yourself; avoid trifling conversation.
 >Order. Let all your things have their places; let each part of your business have its time.
