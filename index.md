@@ -43,12 +43,17 @@ This is a normal paragraph following a header. GitHub is a code hosting platform
 ### Header 3
 
 ```js
-class Y extends ArrayList<N>{};int H=100,W=500,k=50;
-class N{int Q=15,q=2,lE=8,A=0,G,W;float x,y,F,K,r,U,I=PI/5,P=PI/8,O=-0.134;N(float a,float b,float c,float d,float e,float f,int g,int h){r=a;x=b;y=c;F=d;K=e;U=f;G=g;W=h;}
-void D(){noStroke();fill(k,W==3?(k+G*10):H,k);ellipse(x,y,r,r);if((W>3&&A<q)||W==lE&&G==Q){pushMatrix();translate(x,y);scale(r*10);rotate(atan2(K,F));fill(H,255,H);arc(0,O,1,.7,0+P,PI-P,2);arc(0,-O,1,.7,PI+P,2*PI-P,2);popMatrix();}A++;}
-boolean R(){return W<=lE&&A==q;}
-Y S(){Y out=new Y();float M=dist(0,0,F,K),a=atan2(K,F),B=a+I,L=M*cos(B),C=M*sin(B),J=3.0/4;if(G==Q){if(W<lE){if(W>2)J=0.8;out.add(new N(r*0.9,x+L,y+C,L*J,C*J,-U,0,W+1));B=a-I;L=M*cos(B);C=M*sin(B);out.add(new N(r*0.9,x+L,y+C,L*J,C*J,-U,0,W+1));}}else{a+=U;L=M*cos(a);C=M*sin(a);out.add(new N(r,x+L,y+C,L,C,U,G+1,W));}
-return out;}}Y T=new Y();void setup(){size(500,500); smooth();T.add(new N(3,W/2,W*9/10,-2,-6,PI/H,0,0));}void draw(){background(255);Y M=new Y();for(N t:T){t.D();if(t.R()){M.addAll(t.S());}}T.addAll(M);}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script>
+$.ajax({
+  type: 'POST',
+  url: "path/to/api",
+  data: "banana=yellow",
+  success: function (data) {
+    alert("Success: " + data);
+  },
+});
+</script>
 ```
 <!--
 ```ruby
