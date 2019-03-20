@@ -1,5 +1,3 @@
-
-
 <script src="scripts/main.js"></script>
 
 As a SLUG graduate from the University of California Santa Cruz (UCSC)
