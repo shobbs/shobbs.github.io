@@ -1,17 +1,17 @@
 ---
 layout: default
 ---
-
+<!--
 Text can be **bold**, _italic_, or ~~strikethrough~~.
 
 [Want to Contact me via email](mailto:mail.shobbs@gmail.com)
 [Testing About Page](./dark.html)
-
+-->
 As a SLUG graduate from the University of California Santa Cruz (UCSC)
 
 ![CYBERSLUG](https://www.soe.ucsc.edu/sites/default/files/cyber-slug.svg)
 
-, I will apply allthe knowledge gained from my experiences and contacts in order to leave a
+I will apply allthe knowledge gained from my experiences and contacts in order to leave a
 warm and lasting impression on the clientele. I would be right at home among
 any IT staff or application developers. I have conducted research at UCSC and
 Caltech through the Southern California Bioinformatics Institute and
