@@ -33,8 +33,10 @@ This site is still a work in progress.
 ### Code Snippet of the Day
 ```js
 function u(t) {
-for(let w=c.width=127,i=9086,a,b,n,B;a=i&w,b=i--/w;x.fillRect(a,b,1,1/(t+a/n&1^b/n)))n=b-20,B=(w*S(t*9+n/9)+(a-40)**2+n*n)/1e3,n*=B>1||C(B)
-Mar 7, 2019 12:31 PM}// 139/140
+for(w=c.width=1e3,i=99;r=10*i--;i?x.stroke():x.fill())
+x.beginPath(p=(1+t/2-r/w)%2),
+x.ellipse(480,270+20*S(p*40)/9**p+!i*w*(p-2),r,r/3,0,0,7)
+}
 
 ```
 
