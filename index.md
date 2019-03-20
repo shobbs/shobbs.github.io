@@ -32,17 +32,10 @@ This site is still a work in progress.
 
 ### Code Snippet of the Day
 ```js
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script>
-$.ajax({
-  type: 'POST',
-  url: "path/to/api",
-  data: "banana=yellow",
-  success: function (data) {
-    alert("Success: " + data);
-  },
-});
-</script>
+function u(t) {
+for(let w=c.width=127,i=9086,a,b,n,B;a=i&w,b=i--/w;x.fillRect(a,b,1,1/(t+a/n&1^b/n)))n=b-20,B=(w*S(t*9+n/9)+(a-40)**2+n*n)/1e3,n*=B>1||C(B)
+Mar 7, 2019 12:31 PM}// 139/140
+
 ```
 
 
