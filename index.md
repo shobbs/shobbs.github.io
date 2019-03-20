@@ -1,12 +1,7 @@
-<!-----
-layout: default
----
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
 
-[Want to Contact me via email](mailto:mail.shobbs@gmail.com)
-[Testing About Page](./dark.html)
--->
+<script src="scripts/main.js"></script>
+
 As a SLUG graduate from the University of California Santa Cruz (UCSC)
 
 ![CYBERSLUG](https://www.soe.ucsc.edu/sites/default/files/cyber-slug.svg)
@@ -53,6 +48,8 @@ $.ajax({
 });
 </script>
 ```
+
+
 <!--
 ```ruby
 # Ruby code with syntax highlighting
