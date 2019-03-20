@@ -18,11 +18,10 @@ Caltech through the Southern California Bioinformatics Institute and
 MARC/MBRS programs. I also received professional training in presenting
 scientific documents and reports.
 
-# Header 1
+# Moto of the Day
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
-## Header 2
+This site is still a work in progress.
+## Quote of the day
 
 > This is a blockquote following a header.
 >
@@ -40,8 +39,7 @@ This is a normal paragraph following a header. GitHub is a code hosting platform
 >Chastity. Rarely use venery but for health or offspring, never to dullness, weakness, or the injury of your own or another's peace or reputation.
 >Humility. Imitate Jesus and Socrates.
 
-### Header 3
-
+### Code Snippet of the Day
 ```js
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script>
