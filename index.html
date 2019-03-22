@@ -625,31 +625,32 @@
     	<section class="contact section-padding bg-img" data-overlay-dark="8" data-background="img/b5.jpg" data-scroll-index="6">
     		<div class="container">
     			<div class="row">
-							<form name="contact" method="POST" data-netlify="true">
-									<p>
-										<label>Your Name: <input type="text" name="name" /></label>   
-									</p>
-									<p>
-										<label>Your Email: <input type="email" name="email" /></label>
-									</p>
-									<p>
-										<label>Your Role: <select name="role[]" multiple>
-											<option value="leader">Leader</option>
-											<option value="follower">Follower</option>
-										</select></label>
-									</p>
-									<p>
-										<label>Message: <textarea name="message"></textarea></label>
-									</p>
-									<p>
-										<button type="submit">Send</button>
-									</p>
-								</form>
-    				
     				<!-- Section-Head -->
     				<div class="section-head full-width mb-50">
     					<h4 class="title">Get In Touch</h4>
-    				</div>
+						</div>
+						<form name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true">
+								<p>
+									<label>Your Name: <input type="text" name="name" /></label>   
+								</p>
+								<p>
+									<label>Your Email: <input type="email" name="email" /></label>
+								</p>
+								<p>
+									<label>Your Role: <select name="role[]" multiple>
+										<option value="Hiring Manager">Hiring Nanager</option>
+										<option value="Recruter">Recruter</option>
+										<option value="Developer">Developer</option>
+										<option value="Designer">Designer</option>
+									</select></label>
+								</p>
+								<p>
+									<label>Message: <textarea name="message"></textarea></label>
+								</p>
+								<p>
+									<button type="submit">Send</button>
+								</p>
+							</form>
      <div class="info full-width">
      	<div class="row">
      		<div class="col-md-4">
