@@ -128,7 +128,7 @@
           if(editor.value == oldCode) {
             return;
           }
-          editor.size = Math.max(editor.value.length, 1);
+          editor.size = Math.max(editor.value.length, 0);
           ccd.innerText = editor.value.length;
           replaceIframe(editor.value);
           oldCode = editor.value;
