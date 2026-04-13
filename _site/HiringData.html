@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selection Bias Analysis & AI Integration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Phosphor Icons for UI elements -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- html2pdf for downloading reports -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+        .bar-positive { fill: #10b981; transition: fill 0.3s; }
+        .bar-positive:hover { fill: #059669; }
+        .bar-negative { fill: #ef4444; transition: fill 0.3s; }
+        .bar-negative:hover { fill: #dc2626; }
+        .axis-text { font-size: 12px; fill: #64748b; font-weight: 500;}
+        .bar-label { font-size: 11px; font-weight: 600; fill: #334155; }
+
+        #tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.98);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.1s;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+            z-index: 50;
+            max-width: 260px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .prose p { margin-bottom: 1.25rem; line-height: 1.75; }
+        .prose h3 { margin-top: 2.5rem; margin-bottom: 1rem; color: #0f172a; font-weight: 700; font-size: 1.35rem; letter-spacing: -0.01em;}
+        .prose h4 { margin-top: 1.5rem; margin-bottom: 0.75rem; color: #334155; font-weight: 600; font-size: 1.1rem;}
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; }
+            .shadow-xl { box-shadow: none; }
+        }
+    </style>
+</head>
+<body class="md:p-8 lg:p-12">
+
+    <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden relative">
+
+        <!-- Sticky Header -->
+        <div class="sticky top-0 z-40 bg-slate-900 text-white p-6 md:p-8 lg:px-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-md">
+            <div>
+                <h1 class="text-2xl md:text-4xl font-bold mb-2 tracking-tight">AI-Assisted Federal Selection</h1>
+                <p class="text-slate-300 text-sm md:text-base max-w-2xl">
+                    Resolving systemic hiring bias through objective, scalable, and ALCOA-compliant artificial intelligence pipelines.
+                </p>
+            </div>
+            <button id="download-btn" onclick="downloadReport()" class="no-print shrink-0 flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-lg font-medium transition-colors border border-white/20">
+                <i class="ph ph-download-simple text-lg"></i>
+                Download Report
+            </button>
+        </div>
+
+        <div class="p-6 md:p-8 lg:p-12 grid grid-cols-1 xl:grid-cols-12 gap-12">
+
+            <!-- Report Section (Left Column) -->
+            <div class="xl:col-span-6 prose text-slate-700">
+                <div class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold tracking-wide uppercase mb-4">
+                    Executive Summary
+                </div>
+                <h2 class="text-3xl font-bold mb-4 text-slate-900 tracking-tight">Systemic Bottlenecks & Regulatory Imperatives</h2>
+
+                <p>
+                    The current manual screening of federal applications breaks down under high-volume stress. Our analysis reveals that an applicant’s success is statistically dictated by the volume of the candidate pool rather than individual merit, resulting in an arbitrary filtering process with high false-negative rates.
+                </p>
+
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 my-6 border-l-4 border-l-blue-600">
+                    <h4 class="!mt-0 flex items-center gap-2"><i class="ph-fill ph-chart-polar text-blue-600"></i> Statistical Proof of Bias</h4>
+                    <p class="text-sm !mb-0 text-slate-600">
+                        A Chi-square test for independence was computed across 69 federal classification groups to evaluate the uniformity of selection chances. The resulting statistic yielded a value of <strong>χ² = 15,640.83, df = 68, p < 0.001</strong>. This definitively rejects the null hypothesis, indicating a statistically significant, structural deviation from expected selection distributions based purely on applicant volume.
+                    </p>
+                </div>
+
+                <h3>Restoring Data Integrity & ALCOA Compliance</h3>
+                <p>
+                    In quality management, systems must adhere to ALCOA+ principles (Attributable, Legible, Contemporaneous, Original, Accurate). Human reviewers processing upwards of 50,000 resumes (e.g., ZA4 classification) suffer from evaluation fatigue, violating the core tenet of <strong>Accuracy</strong> and running contrary to stringent eCFR guidelines. Just as manual processing in cleanroom manufacturing introduces intolerable defect rates, manual resume screening at federal scales introduces uncontrollable systemic bias.
+                </p>
+
+                <h3>The Deployable AI-Assisted Pipeline</h3>
+                <p>
+                    Modern screening systems leverage transformer-based Natural Language Processing (NLP) embeddings to convert resumes into high-dimensional feature vectors. These vectors are evaluated using ranking models optimized for predictive performance while incorporating strict fairness constraints (e.g., demographic parity, equal opportunity).
+                </p>
+
+                <div class="bg-white border border-slate-200 rounded-xl shadow-sm p-2 mb-6">
+                    <ul class="divide-y divide-slate-100">
+                        <li class="p-4 flex items-start gap-4">
+                            <div class="bg-blue-100 text-blue-700 p-2 rounded-lg"><i class="ph ph-file-text text-xl"></i></div>
+                            <div><strong class="text-slate-900 block mb-1">Stage 1: Vectorization</strong> AI parses resumes via NLP embeddings to extract verified skills, mapping them to required OPM competencies.</div>
+                        </li>
+                        <li class="p-4 flex items-start gap-4">
+                            <div class="bg-indigo-100 text-indigo-700 p-2 rounded-lg"><i class="ph ph-mask-happy text-xl"></i></div>
+                            <div><strong class="text-slate-900 block mb-1">Stage 2: Bias-Masked Scoring</strong> A blinded ranking model evaluates candidate vectors, strictly masking demographic data to ensure EEOC and OFCCP compliance.</div>
+                        </li>
+                        <li class="p-4 flex items-start gap-4">
+                            <div class="bg-emerald-100 text-emerald-700 p-2 rounded-lg"><i class="ph ph-microphone-stage text-xl"></i></div>
+                            <div><strong class="text-slate-900 block mb-1">Stage 3: Structured AI Screening</strong> Top-decile candidates undergo an adaptive, AI-led structured interview to validate technical claims and communication skills.</div>
+                        </li>
+                        <li class="p-4 flex items-start gap-4">
+                            <div class="bg-amber-100 text-amber-700 p-2 rounded-lg"><i class="ph ph-shield-check text-xl"></i></div>
+                            <div><strong class="text-slate-900 block mb-1">Stage 4: Human Audit Layer</strong> Final selections are audited by human reviewers with full explainability logs, satisfying federal transparency mandates.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="mt-10 p-8 bg-slate-900 text-white rounded-2xl relative overflow-hidden shadow-2xl">
+                    <div class="absolute top-0 right-0 -mr-8 -mt-8 opacity-10">
+                        <i class="ph-fill ph-cpu text-9xl"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-3">
+                            <div class="h-2 w-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                            <span class="text-emerald-400 font-semibold text-sm tracking-widest uppercase">Live Deployment Available</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 !text-white !mt-0">MYCALLA INC. Intelligence Platform</h3>
+                        <p class="text-slate-300 mb-6 text-sm md:text-base max-w-md">
+                            Operationalize this analysis. We can deploy a real-time, ALCOA-compliant AI screening platform capable of processing 100,000+ federal applications with mathematically proven, bias-aware evaluation. Let's empower our communities by connecting the right talent with the right opportunity.
+                        </p>
+                        <a href="mailto:steve@mycalla.org?subject=Federal%20Hiring&body=I%20am%20interested%20in%20a%20live%20demo%20of%20the%20MYCALLA%20INC.%20AI-Assisted%20Federal%20Selection%20Platform." class="no-print bg-emerald-500 text-slate-900 px-6 py-3 rounded-lg font-bold hover:bg-emerald-400 transition-all shadow-lg hover:shadow-emerald-500/25 inline-flex items-center gap-2">
+                            Request Live Backend Demo <i class="ph ph-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualization Section (Right Column) -->
+            <div class="xl:col-span-6 flex flex-col h-full">
+                <div class="sticky top-32">
+                    <div class="flex justify-between items-end mb-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">Statistical Bias Distribution</h2>
+                            <p class="text-slate-500 text-sm mt-1">Analyzing actual vs expected candidate selections.</p>
+                        </div>
+
+                        <!-- Interactivity Controls -->
+                        <div class="no-print bg-slate-100 p-1 rounded-lg border border-slate-200 flex text-sm shadow-inner">
+                            <button onclick="updateChart('residual')" id="btn-residual" class="sort-btn px-3 py-1.5 rounded-md font-medium bg-white shadow-sm text-blue-600 transition-all">Variance</button>
+                            <button onclick="updateChart('actual')" id="btn-actual" class="sort-btn px-3 py-1.5 rounded-md font-medium text-slate-500 hover:text-slate-800 transition-all">Actual</button>
+                            <button onclick="updateChart('expected')" id="btn-expected" class="sort-btn px-3 py-1.5 rounded-md font-medium text-slate-500 hover:text-slate-800 transition-all">Expected</button>
+                        </div>
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="flex gap-4 mb-4 text-xs font-medium text-slate-600">
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-emerald-500"></span> Over-selection Bias</div>
+                        <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-red-500"></span> Under-selection Bias</div>
+                    </div>
+
+                    <div class="relative w-full h-[600px] border border-slate-200 rounded-xl bg-slate-50 flex items-center justify-center p-2 shadow-inner">
+                        <!-- Loader -->
+                        <div id="loader" class="absolute inset-0 bg-slate-50 z-20 flex flex-col items-center justify-center rounded-xl transition-opacity duration-500">
+                            <i class="ph ph-spinner-gap text-4xl text-blue-600 animate-spin mb-3"></i>
+                            <span class="text-sm font-medium text-slate-500">Processing Statistical Residuals...</span>
+                        </div>
+
+                        <div id="tooltip"></div>
+                        <div id="chart-container" class="w-full h-full"></div>
+                    </div>
+
+                    <div class="flex justify-between text-[11px] font-medium text-slate-500 mt-3 px-4 uppercase tracking-wider">
+                        <span>← Pool Saturated (Bias Against)</span>
+                        <span>Favorable Odds (Bias Towards) →</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bg-slate-50 border-t border-slate-200 p-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+            <div>
+                <strong class="text-slate-700">Methodology:</strong> Data Analytics & ALCOA+ Compliant Statistical Modeling.
+            </div>
+            <div class="flex items-center gap-2">
+                Prepared by <strong class="text-slate-800">MYCALLA INC. Analytics</strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Raw Data
+        let rawData = [
+            { plan: "NF2", residual: 57.07, expected: 402, actual: 1547, apps: 40215 },
+            { plan: "GS10", residual: 43.77, expected: 11, actual: 159, apps: 1137 },
+            { plan: "NF3", residual: 41.85, expected: 475, actual: 1388, apps: 47529 },
+            { plan: "GS12", residual: 41.23, expected: 45, actual: 323, apps: 4533 },
+            { plan: "NF1", residual: 36.86, expected: 85, actual: 425, apps: 8503 },
+            { plan: "GS14", residual: -13.58, expected: 361, actual: 103, apps: 36080 },
+            { plan: "GS9", residual: -15.73, expected: 805, actual: 359, apps: 80516 },
+            { plan: "GS13", residual: -17.52, expected: 798, actual: 303, apps: 79745 },
+            { plan: "ZA4", residual: -22.73, expected: 521, actual: 2, apps: 52039 },
+            { plan: "Unclass", residual: -33.56, expected: 4499, actual: 2248, apps: 449750 }
+        ];
+
+        let currentSort = 'residual';
+
+        // Chart Setup
+        const container = document.getElementById('chart-container');
+        const margin = { top: 20, right: 40, bottom: 40, left: 70 };
+        let width = container.clientWidth - margin.left - margin.right;
+        let height = container.clientHeight - margin.top - margin.bottom;
+
+        const svg = d3.select("#chart-container")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Scales
+        const x = d3.scaleLinear().range([0, width]);
+        const y = d3.scaleBand().range([0, height]).padding(0.35);
+
+        // Axes Groups
+        const xAxisGroup = svg.append("g").attr("transform", `translate(0,${height})`).attr("class", "axis-text");
+        const yAxisGroup = svg.append("g").attr("class", "axis-text");
+
+        // Zero Line
+        const zeroLine = svg.append("line")
+            .attr("y1", 0)
+            .attr("y2", height)
+            .attr("stroke", "#94a3b8")
+            .attr("stroke-width", 2)
+            .attr("stroke-dasharray", "4 4")
+            .attr("opacity", 0); // Hide initially
+
+        const tooltip = d3.select("#tooltip");
+
+        // Initialization
+        setTimeout(() => {
+            document.getElementById('loader').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+                renderChart('residual');
+            }, 500);
+        }, 1000); // Fake load for polished feel
+
+        function updateChart(sortType) {
+            // Update UI buttons
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'shadow-sm', 'text-blue-600');
+                btn.classList.add('text-slate-500');
+            });
+            const activeBtn = document.getElementById(`btn-${sortType}`);
+            activeBtn.classList.add('bg-white', 'shadow-sm', 'text-blue-600');
+            activeBtn.classList.remove('text-slate-500');
+
+            renderChart(sortType);
+        }
+
+        function renderChart(sortType) {
+            currentSort = sortType;
+            let data = [...rawData];
+
+            // Sort logic
+            if(sortType === 'residual') data.sort((a, b) => a.residual - b.residual);
+            if(sortType === 'actual') data.sort((a, b) => a.actual - b.actual);
+            if(sortType === 'expected') data.sort((a, b) => a.expected - b.expected);
+
+            // Update domains
+            const isRes = sortType === 'residual';
+            if (isRes) {
+                const maxVal = Math.max(Math.abs(d3.min(data, d => d.residual)), Math.abs(d3.max(data, d => d.residual)));
+                x.domain([-maxVal * 1.15, maxVal * 1.15]);
+            } else {
+                x.domain([0, d3.max(data, d => d[sortType]) * 1.15]);
+            }
+            y.domain(data.map(d => d.plan));
+
+            // Axes Transitions
+            xAxisGroup.transition().duration(750).call(d3.axisBottom(x).ticks(6))
+                .call(g => g.select(".domain").attr("stroke", "#cbd5e1"))
+                .call(g => g.selectAll(".tick line").attr("stroke", "#e2e8f0"));
+
+            yAxisGroup.transition().duration(750).call(d3.axisLeft(y).tickSize(0))
+                .call(g => g.select(".domain").remove())
+                .selectAll("text").attr("dx", "-5").attr("font-size", "12px").attr("fill", "#475569");
+
+            // Move Zero Line
+            zeroLine.transition().duration(750)
+                .attr("x1", x(0)).attr("x2", x(0))
+                .attr("opacity", isRes ? 1 : 0);
+
+            // JOIN DATA
+            const bars = svg.selectAll(".bar").data(data, d => d.plan);
+
+            // ENTER + UPDATE BARS
+            bars.enter()
+                .append("rect")
+                .attr("class", d => d.residual > 0 ? "bar bar-positive" : "bar bar-negative")
+                .attr("y", d => y(d.plan))
+                .attr("height", y.bandwidth())
+                .attr("rx", 4)
+                .attr("x", x(0))
+                .attr("width", 0)
+                .on("mouseover", showTooltip)
+                .on("mousemove", moveTooltip)
+                .on("mouseout", hideTooltip)
+                .merge(bars)
+                .transition().duration(750)
+                .attr("y", d => y(d.plan))
+                .attr("x", d => isRes ? Math.min(x(0), x(d.residual)) : x(0))
+                .attr("width", d => isRes ? Math.abs(x(d.residual) - x(0)) : Math.abs(x(d[sortType]) - x(0)))
+                .attr("class", d => d.residual > 0 || !isRes ? "bar bar-positive" : "bar bar-negative");
+
+            // JOIN LABELS
+            const labels = svg.selectAll(".bar-label").data(data, d => d.plan);
+
+            // ENTER + UPDATE LABELS
+            labels.enter()
+                .append("text")
+                .attr("class", "bar-label")
+                .attr("y", d => y(d.plan) + y.bandwidth() / 2)
+                .attr("dy", "0.35em")
+                .attr("opacity", 0)
+                .merge(labels)
+                .transition().duration(750)
+                .attr("y", d => y(d.plan) + y.bandwidth() / 2)
+                .attr("x", d => {
+                    let val = isRes ? d.residual : d[sortType];
+                    let xPos = x(val);
+                    return isRes
+                        ? (d.residual > 0 ? xPos + 5 : xPos - 5)
+                        : xPos + 5;
+                })
+                .attr("text-anchor", d => {
+                    if(!isRes) return "start";
+                    return d.residual > 0 ? "start" : "end";
+                })
+                .text(d => {
+                    if(isRes) return (d.residual > 0 ? "+" : "") + d.residual.toFixed(1);
+                    return d[sortType].toLocaleString();
+                })
+                .attr("opacity", 1);
+        }
+
+        function showTooltip(event, d) {
+            const isPositive = d.residual > 0;
+            let text = `<div class="font-bold text-lg border-b border-slate-700 pb-2 mb-2">${d.plan} Classification</div>`;
+            text += `<div class="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">`;
+            text += `<span class="text-slate-400">Total Apps:</span> <span class="font-medium text-right">${d.apps.toLocaleString()}</span>`;
+            text += `<span class="text-slate-400">Expected:</span> <span class="font-medium text-right text-slate-300">~${d.expected.toLocaleString()}</span>`;
+            text += `<span class="text-slate-400">Actual:</span> <span class="font-medium text-right text-white">${d.actual.toLocaleString()}</span>`;
+            text += `<span class="text-slate-400 pt-2 border-t border-slate-700 mt-1">Bias Var:</span> <span class="font-bold text-right pt-2 border-t border-slate-700 mt-1 ${isPositive ? 'text-emerald-400' : 'text-red-400'}">${d.residual.toFixed(2)}</span>`;
+            text += `</div>`;
+
+            tooltip.style("opacity", 1).html(text);
+        }
+
+        function moveTooltip(event) {
+            tooltip.style("left", (event.pageX + 15) + "px")
+                   .style("top", (event.pageY - 28) + "px");
+        }
+
+        function hideTooltip() {
+            tooltip.style("opacity", 0);
+        }
+
+        function downloadReport() {
+            const btn = document.getElementById('download-btn');
+            const originalText = btn.innerHTML;
+
+            // Show loading state
+            btn.innerHTML = '<i class="ph ph-spinner-gap animate-spin text-lg"></i> Generating PDF...';
+
+            const container = document.querySelector('.max-w-7xl');
+
+            const opt = {
+                margin:       0.25,
+                filename:     'MYCALLA_AI_Federal_Selection_Report.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  {
+                    scale: 2,
+                    useCORS: true,
+                    windowWidth: 1280, // Force desktop layout for the PDF
+                    ignoreElements: function(element) {
+                        // Ignore buttons and UI elements tagged with 'no-print'
+                        return element.classList && element.classList.contains('no-print');
+                    }
+                },
+                jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }
+            };
+
+            // Generate and download PDF
+            html2pdf().set(opt).from(container).save().then(() => {
+                // Restore original button text
+                btn.innerHTML = originalText;
+            });
+        }
+
+    </script>
+</body>
+</html>
